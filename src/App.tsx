@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Header from "./components/site/Header";
 import Footer from "./components/site/Footer";
+import WhatsAppButton from "./components/site/WhatsAppButton";
+import CSChat from "./components/site/CSChat";
 import Index from "./pages/Index";
 import Agenda from "./pages/Agenda";
 import Blog from "./pages/Blog";
@@ -31,6 +33,8 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
+          <WhatsAppButton />
+          <CSChat />
         </BrowserRouter>
       </TooltipProvider>
     </HelmetProvider>

@@ -1,6 +1,12 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import WhyUs from "@/components/sections/WhyUs";
+import Services from "@/components/sections/Services";
+import Testimonials from "@/components/sections/Testimonials";
+import FAQSection from "@/components/sections/FAQ";
+import { faq } from "@/data/faq";
 import { agenda } from "@/data/agenda";
 import { posts } from "@/data/blogs";
 import { Button } from "@/components/ui/button";
@@ -26,25 +32,27 @@ const Index = () => {
           description: 'Sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia',
           sameAs: []
         })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          '@context':'https://schema.org',
+          '@type':'FAQPage',
+          mainEntity: faq.map(q => ({
+            '@type': 'Question',
+            name: q.q,
+            acceptedAnswer: { '@type': 'Answer', text: q.a }
+          }))
+        })}</script>
       </Helmet>
 
       <Hero />
 
-      <section id="layanan" className="py-12">
-        <div className="container grid md:grid-cols-4 gap-6">
-          {[
-            {t:'Sertifikasi', d:'Skema sertifikasi profesional yang diakui industri.'},
-            {t:'Pelatihan', d:'Program pelatihan praktis untuk peningkatan kompetensi.'},
-            {t:'Penyeleksian', d:'Assessment komprehensif berbasis kompetensi.'},
-            {t:'Penempatan', d:'Penempatan tenaga kerja sesuai kebutuhan perusahaan.'},
-          ].map((it)=> (
-            <article key={it.t} className="rounded-lg border p-6 bg-card shadow-sm hover-scale">
-              <h3 className="font-semibold mb-2">{it.t}</h3>
-              <p className="text-sm text-muted-foreground">{it.d}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <About />
+      <WhyUs />
+
+      <Services />
+
+      <Testimonials />
+
+      <FAQSection />
 
       <section className="py-12 border-t">
         <div className="container">
