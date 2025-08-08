@@ -1,34 +1,36 @@
-import heroImage from "@/assets/hero-delta36.jpg";
+import { CheckCircle2 } from "lucide-react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const About = () => {
   return (
-    <section id="tentang" className="py-12 border-t">
-      <div className="container grid md:grid-cols-2 gap-8 items-center">
-        <div>
+    <section id="tentang" className="py-16 border-t">
+      <div className="container grid md:grid-cols-2 gap-10 items-center">
+        <div className="order-2 md:order-1">
           <header className="mb-4">
-            <h2 className="text-2xl font-semibold">Tentang PT. Delta Tiga Enam</h2>
+            <h2 className="text-3xl font-semibold">Tentang PT. Delta Tiga Enam</h2>
           </header>
-          <article className="text-muted-foreground space-y-3">
-            <p>
-              PT. Delta Tiga Enam adalah perusahaan yang berdedikasi pada layanan
-              sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di
-              Indonesia. Kami mendampingi individu dan organisasi untuk mencapai
-              standar kompetensi terbaik yang diakui industri.
-            </p>
-            <p>
-              Didukung tenaga ahli berpengalaman, pendekatan kami berorientasi hasil,
-              mengutamakan kualitas, kepatuhan, dan keterukuran, sehingga program
-              yang diterima relevan dengan kebutuhan bisnis terkini.
-            </p>
-          </article>
+          <ul className="space-y-3 text-muted-foreground">
+            {[
+              "Fokus pada sertifikasi, pelatihan, seleksi, dan penempatan.",
+              "Instruktur berpengalaman, materi aplikatif.",
+              "Layanan ringkas, berdampak, dan tepat sasaran.",
+            ].map((t) => (
+              <li key={t} className="flex items-start gap-3">
+                <CheckCircle2 className="text-primary mt-0.5" />
+                <span className="text-sm">{t}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div>
-          <img
-            src={heroImage}
-            alt="PT Delta Tiga Enam - training & certification provider"
-            loading="lazy"
-            className="w-full rounded-lg border shadow-sm"
-          />
+        <div className="order-1 md:order-2">
+          <AspectRatio ratio={16 / 9}>
+            <img
+              src="/placeholder.svg"
+              alt="Mockup aktivitas pelatihan dan sertifikasi PT Delta Tiga Enam"
+              loading="lazy"
+              className="h-full w-full rounded-lg border object-cover bg-muted"
+            />
+          </AspectRatio>
         </div>
       </div>
     </section>
