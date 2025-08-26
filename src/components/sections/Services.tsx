@@ -32,7 +32,7 @@ const Services = () => {
           {services.slice(0, 6).map((service, i) => {
             const Icon = icons[i % icons.length];
             return (
-              <article key={service.title} className="group bg-card rounded-xl shadow-sm border hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <article key={service.title} className="group card-gradient rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover-scale border-0">
                 <div className="relative">
                   <AspectRatio ratio={16 / 10}>
                     <img
@@ -42,8 +42,8 @@ const Services = () => {
                       className="h-full w-full object-cover bg-muted group-hover:scale-105 transition-transform duration-300"
                     />
                   </AspectRatio>
-                  <div className="absolute top-4 left-4 p-2 bg-primary rounded-lg text-primary-foreground">
-                    <Icon className="w-5 h-5" />
+                  <div className="absolute top-4 left-4 p-3 bg-hero rounded-xl text-primary-foreground shadow-lg backdrop-blur-sm">
+                    <Icon className="w-6 h-6" />
                   </div>
                 </div>
                 
