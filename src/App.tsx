@@ -9,6 +9,7 @@ import Footer from "./components/site/Footer";
 import WhatsAppButton from "./components/site/WhatsAppButton";
 import CSChat from "./components/site/CSChat";
 import Index from "./pages/Index";
+import Services from "./pages/Services";
 import Agenda from "./pages/Agenda";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -26,6 +27,7 @@ const App = () => (
           <Header />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/layanan" element={<Services />} />
             <Route path="/agenda" element={<Agenda />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
