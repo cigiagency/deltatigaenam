@@ -1,4 +1,3 @@
-import { services } from "@/data/services";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
@@ -10,7 +9,9 @@ import {
 	Building2,
 	ArrowRight,
 	CheckCircle,
+	MessageSquare,
 } from "lucide-react";
+import { useCSChat, useLanguage } from "@/contexts";
 
 const icons = [
 	ShieldCheck,
@@ -22,31 +23,80 @@ const icons = [
 ];
 
 const Services = () => {
+	const { openChat } = useCSChat();
+	const { t } = useLanguage();
+
+	// Function to handle CTA clicks that should open CSChat
+	const handleCTAClick = (e: React.MouseEvent, ctaLabel: string) => {
+		if (
+			ctaLabel.includes("Konsultasi") ||
+			ctaLabel.includes("Gratis") ||
+			ctaLabel.includes("Pelajari lebih lanjut") ||
+			ctaLabel.includes("Cari talenta") ||
+			ctaLabel.includes("Consult") ||
+			ctaLabel.includes("Learn more") ||
+			ctaLabel.includes("Find talent") ||
+			ctaLabel.includes("Free")
+		) {
+			e.preventDefault();
+			// Open the CSChat directly
+			openChat();
+		}
+	};
+
+	// Service data mapped to translations
+	const serviceItems = [
+		{
+			title: t("service1.title"),
+			desc: t("service1.desc"),
+			cta: { label: t("service1.cta"), href: "#" },
+		},
+		{
+			title: t("service2.title"),
+			desc: t("service2.desc"),
+			cta: { label: t("service2.cta"), href: "#" },
+		},
+		{
+			title: t("service3.title"),
+			desc: t("service3.desc"),
+			cta: { label: t("service3.cta"), href: "#" },
+		},
+		{
+			title: t("service4.title"),
+			desc: t("service4.desc"),
+			cta: { label: t("service4.cta"), href: "/agenda" },
+		},
+		{
+			title: t("service5.title"),
+			desc: t("service5.desc"),
+			cta: { label: t("service5.cta"), href: "/agenda" },
+		},
+	];
+
 	return (
 		<section id="layanan" className="py-20 bg-muted/30">
 			<div className="container">
 				<div className="text-center mb-16">
 					<h2 className="text-3xl md:text-4xl font-bold mb-4">
-						Layanan Unggulan Kami
+						{t("services.title")}
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-						Solusi lengkap pengembangan SDM yang terpercaya untuk
-						kemajuan perusahaan Anda
+						{t("services.description")}
 					</p>
 					<Button asChild className="mt-6">
 						<a href="/layanan">
-							Lihat Semua Layanan{" "}
+							{t("services.all")}{" "}
 							<ArrowRight className="ml-2 w-4 h-4" />
 						</a>
 					</Button>
 				</div>
 
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{services.slice(0, 6).map((service, i) => {
+					{serviceItems.slice(0, 6).map((service, i) => {
 						const Icon = icons[i % icons.length];
 						return (
 							<article
-								key={service.title}
+								key={i}
 								className="group card-gradient rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover-scale border-0"
 							>
 								<div className="relative">
@@ -91,7 +141,10 @@ const Services = () => {
 									<div className="flex items-center justify-between">
 										<div className="flex items-center text-sm text-primary">
 											<CheckCircle className="w-4 h-4 mr-1" />
-											<span>Tersertifikasi</span>
+											<span>
+												{t("service.verified") ||
+													"Tersertifikasi"}
+											</span>
 										</div>
 										{service.cta && (
 											<Button
@@ -100,7 +153,15 @@ const Services = () => {
 												asChild
 												className="group/btn"
 											>
-												<a href={service.cta.href}>
+												<a
+													href={service.cta.href}
+													onClick={(e) =>
+														handleCTAClick(
+															e,
+															service.cta!.label
+														)
+													}
+												>
 													{service.cta.label}
 													<ArrowRight className="ml-1 w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
 												</a>
@@ -115,13 +176,16 @@ const Services = () => {
 
 				<div className="text-center mt-12">
 					<p className="text-muted-foreground mb-4">
-						Butuh solusi khusus untuk perusahaan Anda?
+						{t("cta.title")}
 					</p>
-					<Button variant="outline" size="lg" asChild>
-						<a href="#" className="group">
-							Konsultasi Gratis
-							<ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-						</a>
+					<Button
+						variant="outline"
+						size="lg"
+						onClick={(e) => handleCTAClick(e, t("cta.button"))}
+						className="group"
+					>
+						{t("cta.button")}
+						<MessageSquare className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
 					</Button>
 				</div>
 			</div>

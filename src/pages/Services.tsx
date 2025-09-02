@@ -17,8 +17,10 @@ import {
 	Trophy,
 	Clock,
 	Star,
+	MessageSquare,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useCSChat, useLanguage } from "@/contexts";
 
 const icons = [
 	ShieldCheck,
@@ -55,6 +57,8 @@ const features = [
 const Services = () => {
 	const location = useLocation();
 	const canonical = `${window.location.origin}${location.pathname}`;
+	const { openChat } = useCSChat();
+	const { t, language } = useLanguage();
 
 	// Simulate loading state for the page
 	const [loading, setLoading] = useState(true);
@@ -67,6 +71,23 @@ const Services = () => {
 
 		return () => clearTimeout(timer);
 	}, []);
+
+	// Function to handle CTA clicks that should open CSChat
+	const handleCTAClick = (e: React.MouseEvent, ctaLabel: string) => {
+		if (
+			ctaLabel.includes("Konsultasi") ||
+			ctaLabel.includes("Gratis") ||
+			ctaLabel.includes("Pelajari lebih lanjut") ||
+			ctaLabel.includes("Cari talenta") ||
+			ctaLabel.includes("Consult") ||
+			ctaLabel.includes("Learn more") ||
+			ctaLabel.includes("Find talent")
+		) {
+			e.preventDefault();
+			// Open the CSChat directly
+			openChat();
+		}
+	};
 
 	if (loading) {
 		return (
@@ -182,24 +203,35 @@ const Services = () => {
 		<main>
 			<Helmet>
 				<title>
-					Layanan Pelatihan & Sertifikasi | PT. Delta Tiga Enam
+					{language === "id"
+						? "Layanan Pelatihan & Sertifikasi | PT. Delta Tiga Enam"
+						: "Training & Certification Services | PT. Delta Tiga Enam"}
 				</title>
 				<meta
 					name="description"
-					content="Layanan lengkap sertifikasi tenaga kerja, pelatihan kompetensi, konsultasi manajemen, dan penempatan SDM. Tingkatkan kompetensi tim Anda bersama PT. Delta Tiga Enam."
+					content={
+						language === "id"
+							? "Layanan lengkap sertifikasi tenaga kerja, pelatihan kompetensi, konsultasi manajemen, dan penempatan SDM. Tingkatkan kompetensi tim Anda bersama PT. Delta Tiga Enam."
+							: "Complete workforce certification services, competency training, management consulting, and HR placement. Enhance your team's competencies with PT. Delta Tiga Enam."
+					}
 				/>
 				<link rel="canonical" href={canonical} />
 				<script type="application/ld+json">
 					{JSON.stringify({
 						"@context": "https://schema.org",
 						"@type": "Service",
-						name: "Layanan Pelatihan dan Sertifikasi",
+						name:
+							language === "id"
+								? "Layanan Pelatihan dan Sertifikasi"
+								: "Training and Certification Services",
 						provider: {
 							"@type": "Organization",
 							name: "PT. Delta Tiga Enam",
 						},
 						description:
-							"Layanan pelatihan profesional dan sertifikasi tenaga kerja",
+							language === "id"
+								? "Layanan pelatihan profesional dan sertifikasi tenaga kerja"
+								: "Professional training and workforce certification services",
 						areaServed: "Indonesia",
 					})}
 				</script>
@@ -210,15 +242,13 @@ const Services = () => {
 				<div className="container">
 					<div className="max-w-3xl mx-auto text-center">
 						<h1 className="text-4xl md:text-5xl font-bold mb-6">
-							Layanan Pelatihan & Sertifikasi Profesional
+							{t("services.title")}
 						</h1>
 						<p className="text-xl text-muted-foreground mb-8">
-							Tingkatkan kompetensi SDM perusahaan Anda dengan
-							program pelatihan dan sertifikasi yang dirancang
-							khusus sesuai kebutuhan industri
+							{t("services.description")}
 						</p>
 						<Button size="lg" asChild>
-							<a href="#services">Jelajahi Layanan Kami</a>
+							<a href="#services">{t("services.all")}</a>
 						</Button>
 					</div>
 				</div>
@@ -234,11 +264,10 @@ const Services = () => {
 						style={{ animationDelay: "0.2s" }}
 					>
 						<h2 className="text-3xl md:text-4xl font-bold mb-4">
-							Layanan Lengkap Kami
+							{t("services.title")}
 						</h2>
 						<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-							Solusi komprehensif untuk semua kebutuhan
-							pengembangan SDM perusahaan Anda
+							{t("services.description")}
 						</p>
 					</div>
 
@@ -247,7 +276,7 @@ const Services = () => {
 							const Icon = icons[i % icons.length];
 							return (
 								<article
-									key={service.title}
+									key={i}
 									className="group bg-card rounded-xl shadow-sm border hover:shadow-xl transition-all duration-300 overflow-hidden animate-fade-in"
 									style={{
 										animationDelay: `${
@@ -259,7 +288,11 @@ const Services = () => {
 										<AspectRatio ratio={16 / 10}>
 											<img
 												src={`/layanan/${i + 1}.jpg`}
-												alt={`${service.title} - Layanan PT. Delta Tiga Enam`}
+												alt={
+													language === "id"
+														? `${service.title.id} - Layanan PT. Delta Tiga Enam`
+														: `${service.title.en} - Services PT. Delta Tiga Enam`
+												}
 												loading="lazy"
 												onError={(e) => {
 													const img =
@@ -290,24 +323,29 @@ const Services = () => {
 
 									<div className="p-6">
 										<h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-											{service.title}
+											{language === "id"
+												? service.title.id
+												: service.title.en}
 										</h3>
 										<p className="text-muted-foreground mb-6 leading-relaxed">
-											{service.desc}
+											{language === "id"
+												? service.desc.id
+												: service.desc.en}
 										</p>
 
 										<div className="space-y-4">
 											<div className="flex items-center text-sm text-primary">
 												<CheckCircle className="w-4 h-4 mr-2" />
 												<span>
-													Tersertifikasi & Berstandar
-													Nasional
+													{t("service.verified")}
 												</span>
 											</div>
 
 											<div className="flex items-center justify-between pt-4 border-t">
 												<span className="text-sm font-medium text-primary">
-													Mulai dari konsultasi gratis
+													{language === "id"
+														? "Mulai dari konsultasi gratis"
+														: "Starting from free consultation"}
 												</span>
 												{service.cta && (
 													<Button
@@ -319,8 +357,27 @@ const Services = () => {
 															href={
 																service.cta.href
 															}
+															onClick={(e) =>
+																handleCTAClick(
+																	e,
+																	language ===
+																		"id"
+																		? service.cta!
+																				.label
+																				.id
+																		: service.cta!
+																				.label
+																				.en
+																)
+															}
 														>
-															{service.cta.label}
+															{language === "id"
+																? service.cta
+																		.label
+																		.id
+																: service.cta
+																		.label
+																		.en}
 															<ArrowRight className="ml-1 w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
 														</a>
 													</Button>
@@ -343,16 +400,29 @@ const Services = () => {
 				<div className="container">
 					<div className="max-w-3xl mx-auto text-center">
 						<h2 className="text-3xl md:text-4xl font-bold mb-6">
-							Siap Meningkatkan Kompetensi Tim Anda?
+							{language === "id"
+								? "Siap Meningkatkan Kompetensi Tim Anda?"
+								: "Ready to Enhance Your Team's Competency?"}
 						</h2>
 						<p className="text-xl mb-8 opacity-90">
-							Konsultasikan kebutuhan pelatihan perusahaan Anda
-							dengan tim ahli kami. Dapatkan solusi yang tepat
-							untuk mengembangkan SDM berkualitas.
+							{language === "id"
+								? "Konsultasikan kebutuhan pelatihan perusahaan Anda dengan tim ahli kami. Dapatkan solusi yang tepat untuk mengembangkan SDM berkualitas."
+								: "Consult your company's training needs with our expert team. Get the right solution to develop quality human resources."}
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Button size="lg" variant="secondary" asChild>
-								<a href="/agenda">Konsultasi Gratis</a>
+							<Button
+								size="lg"
+								variant="secondary"
+								onClick={(e) =>
+									handleCTAClick(
+										e,
+										language === "id"
+											? "Konsultasi Gratis"
+											: "Free Consultation"
+									)
+								}
+							>
+								{t("cta.button")}
 							</Button>
 						</div>
 					</div>

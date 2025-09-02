@@ -5,27 +5,32 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useLanguage } from "@/contexts";
 
 const FAQSection = () => {
+	const { t, language } = useLanguage();
+
 	return (
 		<section id="faq" className="py-10 border-t">
 			<div className="container">
 				<header className="mb-6 text-center md:text-left">
-					<h2 className="text-xl md:text-2xl font-semibold">FAQ</h2>
+					<h2 className="text-xl md:text-2xl font-semibold">
+						{t("faq.title")}
+					</h2>
 				</header>
 				<Accordion type="single" collapsible className="w-full">
 					{faq.map((f, idx) => (
 						<AccordionItem
-							key={f.q}
+							key={language === "id" ? f.q.id : f.q.en}
 							value={`faq-${idx}`}
 							className="border-b"
 						>
 							<AccordionTrigger className="text-left text-sm md:text-base leading-relaxed">
-								{f.q}
+								{language === "id" ? f.q.id : f.q.en}
 							</AccordionTrigger>
 							<AccordionContent>
 								<p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-									{f.a}
+									{language === "id" ? f.a.id : f.a.en}
 								</p>
 							</AccordionContent>
 						</AccordionItem>

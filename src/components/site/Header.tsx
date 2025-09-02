@@ -1,9 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts";
 
 const Header = () => {
 	const [open, setOpen] = useState(false);
+	const { language, setLanguage } = useLanguage();
+
+	const toggleLanguage = () => {
+		setLanguage(language === "id" ? "en" : "id");
+	};
 
 	return (
 		<header className="border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
@@ -11,7 +17,11 @@ const Header = () => {
 				<Link to="/" className="flex items-center gap-2">
 					<img
 						src="/logo.png"
-						alt="PT. Delta Tiga Enam"
+						alt={
+							language === "id"
+								? "PT. Delta Tiga Enam"
+								: "PT. Delta Tiga Enam"
+						}
 						className="h-8 w-auto"
 						loading="eager"
 					/>
@@ -29,7 +39,7 @@ const Header = () => {
 							} story-link`
 						}
 					>
-						Beranda
+						{language === "id" ? "Beranda" : "Home"}
 					</NavLink>
 					<NavLink
 						to="/layanan"
@@ -41,7 +51,7 @@ const Header = () => {
 							} story-link`
 						}
 					>
-						Layanan
+						{language === "id" ? "Layanan" : "Services"}
 					</NavLink>
 					<NavLink
 						to="/agenda"
@@ -53,7 +63,7 @@ const Header = () => {
 							} story-link`
 						}
 					>
-						Agenda
+						{language === "id" ? "Agenda" : "Agenda"}
 					</NavLink>
 					<NavLink
 						to="/blog"
@@ -65,17 +75,31 @@ const Header = () => {
 							} story-link`
 						}
 					>
-						Blog
+						{language === "id" ? "Blog" : "Blog"}
 					</NavLink>
+					<button
+						onClick={toggleLanguage}
+						className="text-sm text-muted-foreground hover:text-foreground story-link"
+					>
+						{language === "id" ? "EN" : "ID"}
+					</button>
 				</nav>
 
-				<button
-					className="md:hidden"
-					aria-label="Toggle menu"
-					onClick={() => setOpen((v) => !v)}
-				>
-					<Menu />
-				</button>
+				<div className="flex items-center gap-4">
+					<button
+						onClick={toggleLanguage}
+						className="md:hidden text-sm text-muted-foreground hover:text-foreground story-link mr-4"
+					>
+						{language === "id" ? "EN" : "ID"}
+					</button>
+					<button
+						className="md:hidden"
+						aria-label="Toggle menu"
+						onClick={() => setOpen((v) => !v)}
+					>
+						<Menu />
+					</button>
+				</div>
 			</div>
 
 			{open && (
@@ -86,28 +110,28 @@ const Header = () => {
 							onClick={() => setOpen(false)}
 							className="text-sm text-foreground"
 						>
-							Beranda
+							{language === "id" ? "Beranda" : "Home"}
 						</Link>
 						<Link
 							to="/layanan"
 							onClick={() => setOpen(false)}
 							className="text-sm text-foreground"
 						>
-							Layanan
+							{language === "id" ? "Layanan" : "Services"}
 						</Link>
 						<Link
 							to="/agenda"
 							onClick={() => setOpen(false)}
 							className="text-sm text-foreground"
 						>
-							Agenda
+							{language === "id" ? "Agenda" : "Agenda"}
 						</Link>
 						<Link
 							to="/blog"
 							onClick={() => setOpen(false)}
 							className="text-sm text-foreground"
 						>
-							Blog
+							{language === "id" ? "Blog" : "Blog"}
 						</Link>
 					</div>
 				</div>

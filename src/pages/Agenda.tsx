@@ -4,11 +4,13 @@ import { useAgenda } from "@/hooks/use-agenda";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { SkeletonLoader } from "@/components/ui/skeleton-loader";
+import { useLanguage } from "@/contexts";
 
 const Agenda = () => {
 	const location = useLocation();
 	const canonical = `${window.location.origin}${location.pathname}`;
 	const { agenda, loading, error } = useAgenda();
+	const { t, language } = useLanguage();
 
 	const sortedAgenda = [...agenda].sort((a, b) =>
 		a.date.localeCompare(b.date)
@@ -17,7 +19,7 @@ const Agenda = () => {
 	if (loading) {
 		return (
 			<main className="container py-12">
-				<h1 className="text-3xl font-bold mb-6">Agenda Mendatang</h1>
+				<h1 className="text-3xl font-bold mb-6">{t("agenda.title")}</h1>
 				<div className="grid gap-6 md:grid-cols-2">
 					{[1, 2, 3, 4].map((item) => (
 						<div
@@ -60,10 +62,12 @@ const Agenda = () => {
 	if (error) {
 		return (
 			<main className="container py-12">
-				<h1 className="text-3xl font-bold mb-6">Agenda Mendatang</h1>
+				<h1 className="text-3xl font-bold mb-6">{t("agenda.title")}</h1>
 				<div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
 					<p className="text-destructive">
-						Error loading agenda: {error}
+						{language === "id"
+							? `Error memuat agenda: ${error}`
+							: `Error loading agenda: ${error}`}
 					</p>
 				</div>
 			</main>
@@ -74,15 +78,21 @@ const Agenda = () => {
 		<main className="container py-12">
 			<Helmet>
 				<title>
-					Agenda Pelatihan & Sertifikasi | PT. Delta Tiga Enam
+					{language === "id"
+						? "Agenda Pelatihan & Sertifikasi | PT. Delta Tiga Enam"
+						: "Training & Certification Agenda | PT. Delta Tiga Enam"}
 				</title>
 				<meta
 					name="description"
-					content="Jadwal agenda pelatihan dan sertifikasi mendatang dari PT. Delta Tiga Enam."
+					content={
+						language === "id"
+							? "Jadwal agenda pelatihan dan sertifikasi mendatang dari PT. Delta Tiga Enam."
+							: "Upcoming training and certification agenda schedule from PT. Delta Tiga Enam."
+					}
 				/>
 				<link rel="canonical" href={canonical} />
 			</Helmet>
-			<h1 className="text-3xl font-bold mb-6">Agenda Mendatang</h1>
+			<h1 className="text-3xl font-bold mb-6">{t("agenda.title")}</h1>
 			<section className="grid gap-6 md:grid-cols-2">
 				{sortedAgenda.map((a, index) => (
 					<article
@@ -92,17 +102,26 @@ const Agenda = () => {
 					>
 						<header className="mb-2">
 							<time className="text-sm text-muted-foreground">
-								{new Date(a.date).toLocaleString("id-ID", {
-									dateStyle: "full",
-									timeStyle: "short",
-								})}
+								{new Date(a.date).toLocaleString(
+									language === "id" ? "id-ID" : "en-US",
+									{
+										dateStyle: "full",
+										timeStyle: "short",
+									}
+								)}
 							</time>
-							<h2 className="text-xl font-semibold">{a.title}</h2>
+							<h2 className="text-xl font-semibold">
+								{language === "id" ? a.title.id : a.title.en}
+							</h2>
 						</header>
 						<p className="text-sm text-muted-foreground mb-3">
-							{a.location}
+							{language === "id" ? a.location.id : a.location.en}
 						</p>
-						<p className="text-sm mb-4">{a.description}</p>
+						<p className="text-sm mb-4">
+							{language === "id"
+								? a.description.id
+								: a.description.en}
+						</p>
 						{a.link && (
 							<Button asChild>
 								<a
@@ -110,7 +129,7 @@ const Agenda = () => {
 									target="_blank"
 									rel="noopener noreferrer"
 								>
-									Daftar Sekarang
+									{t("agenda.register")}
 									<ArrowRight className="ml-2 w-4 h-4" />
 								</a>
 							</Button>

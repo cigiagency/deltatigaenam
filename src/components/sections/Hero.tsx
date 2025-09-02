@@ -1,39 +1,38 @@
 import { Button } from "@/components/ui/button";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
-
-const slides = [
-	{
-		id: 1,
-		title: "Mitra Tepercaya Untuk Sertifikasi & Pelatihan Profesional",
-		subtitle: "SOLUSI PELATIHAN TERINTEGRASI",
-		description:
-			"PT. Delta Tiga Enam berdedikasi memberikan layanan terbaik di bidang sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia.",
-		cta: { label: "Lihat Layanan", href: "/layanan" },
-	},
-	{
-		id: 2,
-		title: "Tingkatkan Kompetensi SDM Perusahaan Anda",
-		subtitle: "PELATIHAN BERBASIS KOMPETENSI",
-		description:
-			"Program pelatihan yang disesuaikan dengan kebutuhan industri untuk mengembangkan keterampilan teknis dan soft skills karyawan.",
-		cta: { label: "Lihat Agenda", href: "/agenda" },
-	},
-	{
-		id: 3,
-		title: "Sertifikasi Tenaga Kerja Berstandar Nasional",
-		subtitle: "KOMPETENSI YANG DIAKUI INDUSTRI",
-		description:
-			"Skema sertifikasi berbasis kompetensi yang diakui industri untuk berbagai jabatan dan keahlian sesuai SKKNI.",
-		cta: { label: "Lihat Blog", href: "/blog" },
-	},
-];
+import { useLanguage } from "@/contexts";
 
 const Hero = () => {
+	const { t, language } = useLanguage();
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [canScrollPrev, setCanScrollPrev] = useState(false);
 	const [canScrollNext, setCanScrollNext] = useState(false);
+
+	const slides = [
+		{
+			id: 1,
+			title: t("hero.title1"),
+			subtitle: t("hero.subtitle1"),
+			description: t("hero.description1"),
+			cta: { label: t("hero.cta1"), href: "/layanan" },
+		},
+		{
+			id: 2,
+			title: t("hero.title2"),
+			subtitle: t("hero.subtitle2"),
+			description: t("hero.description2"),
+			cta: { label: t("hero.cta2"), href: "/agenda" },
+		},
+		{
+			id: 3,
+			title: t("hero.title3"),
+			subtitle: t("hero.subtitle3"),
+			description: t("hero.description3"),
+			cta: { label: t("hero.cta3"), href: "/blog" },
+		},
+	];
 
 	const scrollPrev = useCallback(
 		() => emblaApi && emblaApi.scrollPrev(),

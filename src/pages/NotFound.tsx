@@ -1,8 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts";
 
 const NotFound = () => {
 	const location = useLocation();
+	const { t, language } = useLanguage();
 
 	useEffect(() => {
 		console.error(
@@ -16,10 +18,10 @@ const NotFound = () => {
 			<div className="text-center">
 				<h1 className="text-5xl font-bold mb-3">404</h1>
 				<p className="text-lg text-muted-foreground mb-6">
-					Halaman tidak ditemukan
+					{t("notFound.message")}
 				</p>
 				<a href="/" className="story-link text-primary">
-					Kembali ke Beranda
+					{t("notFound.back")}
 				</a>
 			</div>
 		</div>

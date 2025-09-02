@@ -1,33 +1,42 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
+import { useMediumPosts } from "@/hooks/use-medium-posts";
+import { useAgenda } from "@/hooks/use-agenda";
+import { faq } from "@/data/faq";
+import { Button } from "@/components/ui/button";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import WhyUs from "@/components/sections/WhyUs";
 import Services from "@/components/sections/Services";
+import WhyUs from "@/components/sections/WhyUs";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQSection from "@/components/sections/FAQ";
-import { faq } from "@/data/faq";
-import { useMediumPosts } from "@/hooks/use-medium-posts";
-import { Button } from "@/components/ui/button";
-import { useAgenda } from "@/hooks/use-agenda";
+import { useLanguage } from "@/contexts";
 
 const Index = () => {
 	const location = useLocation();
-	const { agenda: upcoming } = useAgenda();
-	const { posts: latestPosts } = useMediumPosts();
-	const latest = [...latestPosts].slice(0, 3);
-
 	const canonical = `${window.location.origin}${location.pathname}`;
+	const { posts: blogPosts } = useMediumPosts();
+	const { agenda } = useAgenda();
+	const { t, language } = useLanguage();
+
+	const latest = [...blogPosts].slice(0, 3);
+	const upcoming = [...agenda].slice(0, 3);
 
 	return (
-		<main>
+		<>
 			<Helmet>
 				<title>
-					PT. Delta Tiga Enam | Training & Certification Provider
+					{language === "id"
+						? "PT. Delta Tiga Enam | Lembaga Konsultan, Training & Sertifikasi"
+						: "PT. Delta Tiga Enam | Consultant, Training & Certification Institution"}
 				</title>
 				<meta
 					name="description"
-					content="Perusahaan penyedia sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia."
+					content={
+						language === "id"
+							? "Perusahaan penyedia sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia."
+							: "Company providing certification, training, selection, and placement of human resources in Indonesia."
+					}
 				/>
 				<link rel="canonical" href={canonical} />
 				<script type="application/ld+json">
@@ -37,7 +46,9 @@ const Index = () => {
 						name: "PT. Delta Tiga Enam",
 						url: window.location.origin,
 						description:
-							"Sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia",
+							language === "id"
+								? "Sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia"
+								: "Certification, training, selection, and placement of human resources in Indonesia",
 						sameAs: [],
 					})}
 				</script>
@@ -47,8 +58,11 @@ const Index = () => {
 						"@type": "FAQPage",
 						mainEntity: faq.map((q) => ({
 							"@type": "Question",
-							name: q.q,
-							acceptedAnswer: { "@type": "Answer", text: q.a },
+							name: language === "id" ? q.q.id : q.q.en,
+							acceptedAnswer: {
+								"@type": "Answer",
+								text: language === "id" ? q.a.id : q.a.en,
+							},
 						})),
 					})}
 				</script>
@@ -65,18 +79,34 @@ const Index = () => {
 			<section className="py-10 border-t">
 				<div className="container">
 					<h2 className="text-xl font-semibold mb-6 text-center">
-						Alur Layanan
+						{t("workflow.title")}
 					</h2>
 					<ol className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
 						{[
-							{ n: 1, t: "Konsultasi", d: "Pahami kebutuhan" },
-							{ n: 2, t: "Penawaran", d: "Rencana & jadwal" },
-							{ n: 3, t: "Kesepakatan", d: "Scope disepakati" },
-							{ n: 4, t: "Pelaksanaan", d: "Eksekusi program" },
+							{
+								n: 1,
+								t: t("workflow.step1.title"),
+								d: t("workflow.step1.desc"),
+							},
+							{
+								n: 2,
+								t: t("workflow.step2.title"),
+								d: t("workflow.step2.desc"),
+							},
+							{
+								n: 3,
+								t: t("workflow.step3.title"),
+								d: t("workflow.step3.desc"),
+							},
+							{
+								n: 4,
+								t: t("workflow.step4.title"),
+								d: t("workflow.step4.desc"),
+							},
 							{
 								n: 5,
-								t: "Evaluasi",
-								d: "Laporan & tindak lanjut",
+								t: t("workflow.step5.title"),
+								d: t("workflow.step5.desc"),
 							},
 						].map((s) => (
 							<li
@@ -116,16 +146,16 @@ const Index = () => {
 				<div className="container">
 					<header className="flex items-end justify-between mb-6">
 						<h2 className="text-2xl font-semibold">
-							Agenda Mendatang
+							{t("agenda.title")}
 						</h2>
 						<a className="story-link" href="/agenda">
-							Lihat semua
+							{t("blog.readMore")}
 						</a>
 					</header>
 					{/* Timeline style */}
 					{upcoming.length > 0 ? (
 						<ul className="relative border-l pl-4 md:pl-6 border-border">
-							{upcoming
+							{[...upcoming]
 								.sort((a, b) => a.date.localeCompare(b.date))
 								.slice(0, 3)
 								.map((a, index) => (
@@ -145,7 +175,9 @@ const Index = () => {
 													{new Date(
 														a.date
 													).toLocaleDateString(
-														"id-ID",
+														language === "id"
+															? "id-ID"
+															: "en-US",
 														{
 															weekday: "long",
 															day: "2-digit",
@@ -155,14 +187,20 @@ const Index = () => {
 													)}
 												</time>
 												<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-primary/10 text-primary">
-													{a.location}
+													{language === "id"
+														? a.location.id
+														: a.location.en}
 												</span>
 											</div>
 											<h3 className="text-sm md:text-base font-semibold">
-												{a.title}
+												{language === "id"
+													? a.title.id
+													: a.title.en}
 											</h3>
 											<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
-												{a.description}
+												{language === "id"
+													? a.description.id
+													: a.description.en}
 											</p>
 											{a.link && (
 												<div className="mt-3">
@@ -176,7 +214,9 @@ const Index = () => {
 															target="_blank"
 															rel="noopener noreferrer"
 														>
-															Daftar
+															{language === "id"
+																? "Daftar"
+																: "Register"}
 														</a>
 													</Button>
 												</div>
@@ -186,7 +226,7 @@ const Index = () => {
 								))}
 						</ul>
 					) : (
-						<p>No upcoming events at the moment.</p>
+						<p>{t("agenda.noUpcoming")}</p>
 					)}
 				</div>
 			</section>
@@ -195,38 +235,57 @@ const Index = () => {
 				<div className="container">
 					<header className="flex items-end justify-between mb-6">
 						<h2 className="text-2xl font-semibold">
-							Artikel Terbaru
+							{t("latestArticles.title")}
 						</h2>
 						<a className="story-link" href="/blog">
-							Lihat semua
+							{t("blog.readMore")}
 						</a>
 					</header>
 					{/* Media cards style */}
 					<div className="grid gap-4 md:grid-cols-3">
 						{latest.map((p, index) => (
 							<article
-								key={p.slug}
-								className="group overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md transition-shadow animate-fade-in"
-								style={{
-									animationDelay: `${index * 0.2 + 0.5}s`,
-								}}
+								key={p.guid}
+								className="group rounded-lg border bg-card shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col"
 							>
-								<div className="p-4">
-									<h3 className="text-sm md:text-base font-semibold leading-snug group-hover:text-primary transition-colors">
+								{p.thumbnail && (
+									<div className="w-full h-32 overflow-hidden">
+										<img
+											src={p.thumbnail}
+											alt={p.title}
+											className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+										/>
+									</div>
+								)}
+								<div className="p-4 flex flex-col flex-grow">
+									<h3 className="text-sm md:text-base font-semibold leading-snug group-hover:text-primary transition-colors line-clamp-2">
 										{p.title}
 									</h3>
-									<p
-										className="text-xs md:text-sm text-muted-foreground mt-1 line-clamp-2"
-										dangerouslySetInnerHTML={{
-											__html: p.excerpt,
-										}}
-									/>
+									<p className="text-xs text-muted-foreground mt-1 line-clamp-2 flex-grow">
+										{p.description.replace(/<[^>]*>/g, "")}
+									</p>
 									<div className="mt-3">
 										<a
-											className="story-link text-sm"
-											href={`/blog/${p.slug}`}
+											className="inline-flex items-center text-xs font-medium text-primary hover:underline"
+											href={p.link}
+											target="_blank"
+											rel="noopener noreferrer"
 										>
-											Baca selengkapnya
+											{t("blog.readMore")}
+											<svg
+												className="ml-1 h-3 w-3"
+												fill="none"
+												stroke="currentColor"
+												viewBox="0 0 24 24"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													strokeWidth={2}
+													d="M14 5l7 7m0 0l-7 7m7-7H3"
+												/>
+											</svg>
 										</a>
 									</div>
 								</div>
@@ -235,7 +294,7 @@ const Index = () => {
 					</div>
 				</div>
 			</section>
-		</main>
+		</>
 	);
 };
 

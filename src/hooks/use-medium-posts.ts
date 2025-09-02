@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { getMediumPosts } from "@/lib/medium";
 import { useLoading } from "@/hooks/use-loading";
 
 export interface MediumPost {
@@ -15,17 +14,8 @@ export interface MediumPost {
 	categories: string[];
 }
 
-export interface BlogPost {
-	slug: string;
-	title: string;
-	excerpt: string;
-	content: string;
-	date: string;
-	category: string;
-}
-
 export const useMediumPosts = () => {
-	const [posts, setPosts] = useState<BlogPost[]>([]);
+	const [posts, setPosts] = useState<MediumPost[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -38,22 +28,41 @@ export const useMediumPosts = () => {
 		const fetchPosts = async () => {
 			try {
 				setLoading(true);
-				const mediumPosts = await getMediumPosts();
+				// Hardcoded credentials as specified
+				const username = "deltatigaenam";
+				const apiKey = "feyvp3rgk8qno7pgf0iwgby5rglyicevz4jdrnrg";
 
-				// Transform Medium posts to match existing BlogPost structure
-				const transformedPosts: BlogPost[] = mediumPosts.map(
-					(post: MediumPost) => ({
-						slug: generateSlug(post.title),
-						title: post.title,
-						excerpt: post.description,
-						content: post.content,
-						date: post.pubDate,
-						category: post.categories[0] || "Uncategorized",
-					})
-				);
+				// Construct the RSS URL
+				const rssUrl = `https://medium.com/feed/@${username}`;
+				const encodedRssUrl = encodeURIComponent(rssUrl);
 
-				setPosts(transformedPosts);
+				// Construct the full API URL
+				const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodedRssUrl}&api_key=${apiKey}&count=10&include=content,thumbnail&order_by=pubDate&order_dir=desc`;
+
+				const response = await fetch(apiUrl);
+
+				if (!response.ok) {
+					const error = new Error(
+						`Medium API error: ${response.status} ${response.statusText}`
+					);
+					(error as any).status = response.status;
+					(error as any).statusText = response.statusText;
+					throw error;
+				}
+
+				const data = await response.json();
+
+				if (data.status !== "ok") {
+					const error = new Error(
+						data.message || "Failed to fetch articles"
+					);
+					(error as any).data = data;
+					throw error;
+				}
+
+				setPosts(data.items || []);
 			} catch (err) {
+				console.error("Error fetching Medium posts:", err);
 				setError(
 					err instanceof Error ? err.message : "Failed to fetch posts"
 				);
@@ -64,14 +73,6 @@ export const useMediumPosts = () => {
 
 		fetchPosts();
 	}, []);
-
-	// Helper function to generate URL-friendly slugs
-	const generateSlug = (title: string): string => {
-		return title
-			.toLowerCase()
-			.replace(/[^a-z0-9]+/g, "-")
-			.replace(/^-+|-+$/g, "");
-	};
 
 	return { posts, loading: showLoading, error };
 };
