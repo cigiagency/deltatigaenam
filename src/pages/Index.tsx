@@ -7,16 +7,15 @@ import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQSection from "@/components/sections/FAQ";
 import { faq } from "@/data/faq";
-import { agenda } from "@/data/agenda";
-import { posts } from "@/data/blogs";
+import { useMediumPosts } from "@/hooks/use-medium-posts";
 import { Button } from "@/components/ui/button";
+import { useAgenda } from "@/hooks/use-agenda";
 
 const Index = () => {
 	const location = useLocation();
-	const upcoming = [...agenda]
-		.sort((a, b) => a.date.localeCompare(b.date))
-		.slice(0, 3);
-	const latest = [...posts].slice(0, 3);
+	const { agenda: upcoming } = useAgenda();
+	const { posts: latestPosts } = useMediumPosts();
+	const latest = [...latestPosts].slice(0, 3);
 
 	const canonical = `${window.location.origin}${location.pathname}`;
 
@@ -82,7 +81,8 @@ const Index = () => {
 						].map((s) => (
 							<li
 								key={s.n}
-								className="relative p-3 rounded-lg border bg-card"
+								className="relative p-3 rounded-lg border bg-card animate-fade-in"
+								style={{ animationDelay: `${s.n * 0.1}s` }}
 							>
 								<div className="flex items-center gap-3">
 									<span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
@@ -105,12 +105,6 @@ const Index = () => {
 							</li>
 						))}
 					</ol>
-
-					<div className="mt-6 text-center">
-						<Button size="sm" asChild>
-							<a href="#layanan">Mulai Konsultasi</a>
-						</Button>
-					</div>
 				</div>
 			</section>
 
@@ -129,45 +123,71 @@ const Index = () => {
 						</a>
 					</header>
 					{/* Timeline style */}
-					<ul className="relative border-l pl-4 md:pl-6 border-border">
-						{upcoming.map((a) => (
-							<li key={a.id} className="mb-6 last:mb-0 relative">
-								<span className="absolute -left-2 md:-left-2.5 top-2 w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-primary border-2 border-background shadow" />
-								<div className="rounded-lg bg-card/80 backdrop-blur border shadow-sm p-4 md:p-5">
-									<div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-										<time className="text-xs text-primary font-medium">
-											{new Date(
-												a.date
-											).toLocaleDateString("id-ID", {
-												weekday: "long",
-												day: "2-digit",
-												month: "long",
-												year: "numeric",
-											})}
-										</time>
-										<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-primary/10 text-primary">
-											{a.location}
-										</span>
-									</div>
-									<h3 className="text-sm md:text-base font-semibold">
-										{a.title}
-									</h3>
-									<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
-										{a.description}
-									</p>
-									<div className="mt-3">
-										<Button
-											size="sm"
-											className="h-8 px-3"
-											asChild
-										>
-											<a href="/agenda">Daftar</a>
-										</Button>
-									</div>
-								</div>
-							</li>
-						))}
-					</ul>
+					{upcoming.length > 0 ? (
+						<ul className="relative border-l pl-4 md:pl-6 border-border">
+							{upcoming
+								.sort((a, b) => a.date.localeCompare(b.date))
+								.slice(0, 3)
+								.map((a, index) => (
+									<li
+										key={a.id}
+										className="mb-6 last:mb-0 relative animate-fade-in"
+										style={{
+											animationDelay: `${
+												index * 0.2 + 0.3
+											}s`,
+										}}
+									>
+										<span className="absolute -left-2 md:-left-2.5 top-2 w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-primary border-2 border-background shadow" />
+										<div className="rounded-lg bg-card/80 backdrop-blur border shadow-sm p-4 md:p-5">
+											<div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+												<time className="text-xs text-primary font-medium">
+													{new Date(
+														a.date
+													).toLocaleDateString(
+														"id-ID",
+														{
+															weekday: "long",
+															day: "2-digit",
+															month: "long",
+															year: "numeric",
+														}
+													)}
+												</time>
+												<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-primary/10 text-primary">
+													{a.location}
+												</span>
+											</div>
+											<h3 className="text-sm md:text-base font-semibold">
+												{a.title}
+											</h3>
+											<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+												{a.description}
+											</p>
+											{a.link && (
+												<div className="mt-3">
+													<Button
+														size="sm"
+														className="h-8 px-3"
+														asChild
+													>
+														<a
+															href={a.link}
+															target="_blank"
+															rel="noopener noreferrer"
+														>
+															Daftar
+														</a>
+													</Button>
+												</div>
+											)}
+										</div>
+									</li>
+								))}
+						</ul>
+					) : (
+						<p>No upcoming events at the moment.</p>
+					)}
 				</div>
 			</section>
 
@@ -183,29 +203,24 @@ const Index = () => {
 					</header>
 					{/* Media cards style */}
 					<div className="grid gap-4 md:grid-cols-3">
-						{latest.map((p) => (
+						{latest.map((p, index) => (
 							<article
 								key={p.slug}
-								className="group overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md transition-shadow"
+								className="group overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md transition-shadow animate-fade-in"
+								style={{
+									animationDelay: `${index * 0.2 + 0.5}s`,
+								}}
 							>
-								<div className="relative aspect-[16/10] bg-muted">
-									<img
-										src="/placeholder.svg"
-										alt={p.title}
-										loading="lazy"
-										className="absolute inset-0 h-full w-full object-cover group-hover:scale-[1.02] transition-transform"
-									/>
-									<span className="absolute left-2.5 top-2.5 inline-flex items-center px-2 py-0.5 rounded-md text-[10px] bg-background/90 border text-muted-foreground">
-										{p.category}
-									</span>
-								</div>
 								<div className="p-4">
 									<h3 className="text-sm md:text-base font-semibold leading-snug group-hover:text-primary transition-colors">
 										{p.title}
 									</h3>
-									<p className="text-xs md:text-sm text-muted-foreground mt-1 line-clamp-2">
-										{p.excerpt}
-									</p>
+									<p
+										className="text-xs md:text-sm text-muted-foreground mt-1 line-clamp-2"
+										dangerouslySetInnerHTML={{
+											__html: p.excerpt,
+										}}
+									/>
 									<div className="mt-3">
 										<a
 											className="story-link text-sm"

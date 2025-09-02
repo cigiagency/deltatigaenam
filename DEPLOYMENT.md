@@ -1,6 +1,6 @@
 # 🚀 cPanel Deployment Guide
 
-This guide will help you deploy your React app to cPanel using Git with deploy keys for private repositories.
+This guide will help you deploy your React app to cPanel using Git with deploy keys for private repositories, using the `deploy-cpanel.sh` script for automated deployment.
 
 ## 📋 Prerequisites
 
@@ -103,33 +103,29 @@ chmod 600 ~/.ssh/config
 
 Click "Create" to clone your repository. This may take a few minutes.
 
-### 5. **Build and Deploy**
+### 5. **Deploy Using deploy-cpanel.sh Script**
 
-After the initial clone, you have two options:
+After the initial clone, use the automated deployment script:
 
-#### Option A: Pre-built Assets (Recommended)
+```bash
+# Navigate to your web directory
+cd public_html
 
-**If you've committed the `dist` folder to Git:**
+# Make the script executable
+chmod +x deploy-cpanel.sh
 
-1. **Clone automatically includes built files** - no build needed!
-2. **Use the auto-deploy script** to extract only built files:
-    ```bash
-    cd public_html
-    chmod +x deploy-cpanel.sh
-    ./deploy-cpanel.sh
-    ```
+# Run the deployment script
+./deploy-cpanel.sh
+```
 
-**Benefits:**
+**What the script does automatically:**
 
--   ✅ **No build time** in cPanel (much faster)
--   ✅ **No dependency installation** needed
--   ✅ **Consistent builds** across environments
--   ✅ **Works on shared hosting** with limited resources
--   ✅ **Automatic cleanup** - removes source code from web directory
-
-#### Option B: Automatic Deployment
-
-If you enabled automatic deployment, cPanel will pull updates when you push to your repository. However, you'll still need to handle the built files using the deploy script.
+-   ✅ **Pulls latest changes** from Git
+-   ✅ **Extracts built files** from dist folder
+-   ✅ **Removes source code** from web directory
+-   ✅ **Sets proper permissions** for web files
+-   ✅ **Creates backups** of previous versions
+-   ✅ **Logs deployment** for tracking
 
 ### 6. **Set up Auto-Deploy Hook (Optional)**
 
@@ -139,11 +135,9 @@ For automatic deployments after each push:
 2. Point it to: `https://yourdomain.com/deploy.php`
 3. Create `deploy.php` in your cPanel:
 
-**For pre-built assets:**
-
 ```php
 <?php
-// deploy.php - for pre-built assets
+// deploy.php - automated deployment using deploy-cpanel.sh
 $output = shell_exec('cd /home/username/public_html && chmod +x deploy-cpanel.sh && ./deploy-cpanel.sh 2>&1');
 file_put_contents('deploy.log', date('Y-m-d H:i:s') . ': ' . $output . "\n", FILE_APPEND);
 ?>
@@ -151,7 +145,7 @@ file_put_contents('deploy.log', date('Y-m-d H:i:s') . ': ' . $output . "\n", FIL
 
 ## 🔄 Updating Your App
 
-### Method 1: Pre-built Assets with Auto-Deploy Script (Recommended)
+### Using deploy-cpanel.sh Script (Recommended)
 
 1. **Build locally**:
 
@@ -170,7 +164,7 @@ file_put_contents('deploy.log', date('Y-m-d H:i:s') . ': ' . $output . "\n", FIL
     ```
 
 3. **In cPanel**: Click "Pull or Deploy" to get the latest changes
-4. **Run the auto-deploy script**:
+4. **Run the deploy script**:
     ```bash
     cd public_html
     ./deploy-cpanel.sh
@@ -183,8 +177,9 @@ file_put_contents('deploy.log', date('Y-m-d H:i:s') . ': ' . $output . "\n", FIL
 -   ✅ **No dependency issues** - works on any hosting
 -   ✅ **Easy rollback** - just pull previous commit
 -   ✅ **Automatic cleanup** - removes source code from web directory
+-   ✅ **Backup creation** - saves previous versions automatically
 
-### Method 2: Direct Upload
+### Alternative: Direct Upload
 
 1. Build locally: `npm run build:cpanel`
 2. Upload the contents of the `dist` folder to your cPanel public_html directory
@@ -358,8 +353,9 @@ chmod +x deploy-cpanel.sh
 # Run deployment
 ./deploy-cpanel.sh
 
-# Manual build and deploy
+# Local build and commit
 npm run build:cpanel
-cp -r dist/* .
-rm -rf dist
+git add dist/
+git commit -m "Update built assets"
+git push origin main
 ```

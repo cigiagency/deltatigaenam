@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { services } from "@/data/services";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { SkeletonLoader } from "@/components/ui/skeleton-loader";
 import {
 	ShieldCheck,
 	GraduationCap,
@@ -17,6 +18,7 @@ import {
 	Clock,
 	Star,
 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const icons = [
 	ShieldCheck,
@@ -54,6 +56,128 @@ const Services = () => {
 	const location = useLocation();
 	const canonical = `${window.location.origin}${location.pathname}`;
 
+	// Simulate loading state for the page
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		// Simulate page loading for better UX
+		const timer = setTimeout(() => {
+			setLoading(false);
+		}, 600);
+
+		return () => clearTimeout(timer);
+	}, []);
+
+	if (loading) {
+		return (
+			<main>
+				{/* Hero Section Skeleton */}
+				<section className="py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-background">
+					<div className="container">
+						<div className="max-w-3xl mx-auto text-center">
+							<SkeletonLoader
+								variant="text"
+								className="h-12 w-3/4 mx-auto mb-6"
+							/>
+							<SkeletonLoader
+								variant="text"
+								className="h-6 w-1/2 mx-auto mb-8"
+							/>
+							<SkeletonLoader
+								variant="text"
+								className="h-12 w-48 mx-auto"
+							/>
+						</div>
+					</div>
+				</section>
+
+				{/* Services Grid Skeleton */}
+				<section className="py-20 bg-muted/30">
+					<div className="container">
+						<div className="text-center mb-16">
+							<SkeletonLoader
+								variant="text"
+								className="h-10 w-1/2 mx-auto mb-4"
+							/>
+							<SkeletonLoader
+								variant="text"
+								className="h-6 w-1/3 mx-auto"
+							/>
+						</div>
+
+						<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+							{[1, 2, 3, 4, 5, 6].map((item) => (
+								<div
+									key={item}
+									className="bg-card rounded-xl shadow-sm border overflow-hidden"
+								>
+									<SkeletonLoader
+										variant="image"
+										className="w-full h-48"
+									/>
+									<div className="p-6">
+										<SkeletonLoader
+											variant="text"
+											className="h-6 w-3/4 mb-3"
+										/>
+										<SkeletonLoader
+											variant="text"
+											className="h-4 w-full mb-2"
+										/>
+										<SkeletonLoader
+											variant="text"
+											className="h-4 w-5/6 mb-6"
+										/>
+										<div className="space-y-4">
+											<div className="flex items-center">
+												<SkeletonLoader
+													variant="text"
+													className="h-4 w-3/4"
+												/>
+											</div>
+											<div className="flex items-center justify-between pt-4 border-t">
+												<SkeletonLoader
+													variant="text"
+													className="h-4 w-1/2"
+												/>
+												<SkeletonLoader
+													variant="text"
+													className="h-10 w-24"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				</section>
+
+				{/* CTA Section Skeleton */}
+				<section className="py-20 bg-primary text-primary-foreground">
+					<div className="container">
+						<div className="max-w-3xl mx-auto text-center">
+							<SkeletonLoader
+								variant="text"
+								className="h-10 w-3/4 mx-auto mb-6"
+							/>
+							<SkeletonLoader
+								variant="text"
+								className="h-6 w-1/2 mx-auto mb-8"
+							/>
+							<div className="flex justify-center">
+								<SkeletonLoader
+									variant="text"
+									className="h-12 w-48"
+								/>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+		);
+	}
+
 	return (
 		<main>
 			<Helmet>
@@ -82,7 +206,7 @@ const Services = () => {
 			</Helmet>
 
 			{/* Hero Section */}
-			<section className="py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-background">
+			<section className="py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-background animate-fade-in">
 				<div className="container">
 					<div className="max-w-3xl mx-auto text-center">
 						<h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -105,7 +229,10 @@ const Services = () => {
 			{/* Services Grid */}
 			<section id="services" className="py-20 bg-muted/30">
 				<div className="container">
-					<div className="text-center mb-16">
+					<div
+						className="text-center mb-16 animate-fade-in"
+						style={{ animationDelay: "0.2s" }}
+					>
 						<h2 className="text-3xl md:text-4xl font-bold mb-4">
 							Layanan Lengkap Kami
 						</h2>
@@ -121,7 +248,12 @@ const Services = () => {
 							return (
 								<article
 									key={service.title}
-									className="group bg-card rounded-xl shadow-sm border hover:shadow-xl transition-all duration-300 overflow-hidden"
+									className="group bg-card rounded-xl shadow-sm border hover:shadow-xl transition-all duration-300 overflow-hidden animate-fade-in"
+									style={{
+										animationDelay: `${
+											(i + 1) * 0.1 + 0.2
+										}s`,
+									}}
 								>
 									<div className="relative">
 										<AspectRatio ratio={16 / 10}>
@@ -204,7 +336,10 @@ const Services = () => {
 			</section>
 
 			{/* CTA Section */}
-			<section className="py-20 bg-primary text-primary-foreground">
+			<section
+				className="py-20 bg-primary text-primary-foreground animate-fade-in"
+				style={{ animationDelay: "0.8s" }}
+			>
 				<div className="container">
 					<div className="max-w-3xl mx-auto text-center">
 						<h2 className="text-3xl md:text-4xl font-bold mb-6">

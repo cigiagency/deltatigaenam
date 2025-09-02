@@ -9,7 +9,7 @@ const slides = [
 		subtitle: "SOLUSI PELATIHAN TERINTEGRASI",
 		description:
 			"PT. Delta Tiga Enam berdedikasi memberikan layanan terbaik di bidang sertifikasi, pelatihan, penyeleksian, dan penempatan tenaga kerja di Indonesia.",
-		cta: { label: "Lihat Agenda", href: "/agenda" },
+		cta: { label: "Lihat Layanan", href: "/layanan" },
 	},
 	{
 		id: 2,
@@ -17,7 +17,7 @@ const slides = [
 		subtitle: "PELATIHAN BERBASIS KOMPETENSI",
 		description:
 			"Program pelatihan yang disesuaikan dengan kebutuhan industri untuk mengembangkan keterampilan teknis dan soft skills karyawan.",
-		cta: { label: "Konsultasi Gratis", href: "#layanan" },
+		cta: { label: "Lihat Agenda", href: "/agenda" },
 	},
 	{
 		id: 3,
@@ -25,7 +25,7 @@ const slides = [
 		subtitle: "KOMPETENSI YANG DIAKUI INDUSTRI",
 		description:
 			"Skema sertifikasi berbasis kompetensi yang diakui industri untuk berbagai jabatan dan keahlian sesuai SKKNI.",
-		cta: { label: "Daftar Sekarang", href: "/agenda" },
+		cta: { label: "Lihat Blog", href: "/blog" },
 	},
 ];
 
