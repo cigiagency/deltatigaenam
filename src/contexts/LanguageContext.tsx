@@ -335,15 +335,19 @@ const translations = {
 		"whyUs.title": "Our Values",
 		"whyUs.description": "The values that form our foundation",
 		"whyUs.value1.title": "Dynamic",
-		"whyUs.value1.desc": "Always adaptive to changes and innovations in the workplace.",
+		"whyUs.value1.desc":
+			"Always adaptive to changes and innovations in the workplace.",
 		"whyUs.value2.title": "Excellence",
 		"whyUs.value2.desc": "Excel in every service provided.",
 		"whyUs.value3.title": "Leading",
-		"whyUs.value3.desc": "Pioneer in developing innovative human capital solutions.",
+		"whyUs.value3.desc":
+			"Pioneer in developing innovative human capital solutions.",
 		"whyUs.value4.title": "Transcendent",
-		"whyUs.value4.desc": "Exceeding client expectations and delivering sustainable added value.",
+		"whyUs.value4.desc":
+			"Exceeding client expectations and delivering sustainable added value.",
 		"whyUs.value5.title": "Action",
-		"whyUs.value5.desc": "Results-oriented and concrete action to achieve goals.",
+		"whyUs.value5.desc":
+			"Results-oriented and concrete action to achieve goals.",
 
 		// CSChat
 		"cschat.button": "Contact Us",
