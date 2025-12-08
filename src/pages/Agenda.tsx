@@ -63,11 +63,11 @@ const Agenda = () => {
 		return (
 			<main className="container py-12">
 				<h1 className="text-3xl font-bold mb-6">{t("agenda.title")}</h1>
-				<div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-					<p className="text-destructive">
+				<div className="bg-muted/50 border rounded-lg p-8 text-center">
+					<p className="text-muted-foreground text-lg">
 						{language === "id"
-							? `Error memuat agenda: ${error}`
-							: `Error loading agenda: ${error}`}
+							? "Maaf, saat ini belum ada agenda yang tersedia. Silakan cek kembali nanti."
+							: "Sorry, there are no agendas available at the moment. Please check back later."}
 					</p>
 				</div>
 			</main>
@@ -93,50 +93,60 @@ const Agenda = () => {
 				<link rel="canonical" href={canonical} />
 			</Helmet>
 			<h1 className="text-3xl font-bold mb-6">{t("agenda.title")}</h1>
-			<section className="grid gap-6 md:grid-cols-2">
-				{sortedAgenda.map((a, index) => (
-					<article
-						key={a.id}
-						className="rounded-lg border p-6 bg-card shadow-sm hover:shadow-md transition-shadow animate-fade-in"
-						style={{ animationDelay: `${index * 0.1}s` }}
-					>
-						<header className="mb-2">
-							<time className="text-sm text-muted-foreground">
-								{new Date(a.date).toLocaleString(
-									language === "id" ? "id-ID" : "en-US",
-									{
-										dateStyle: "full",
-										timeStyle: "short",
-									}
-								)}
-							</time>
-							<h2 className="text-xl font-semibold">
-								{language === "id" ? a.title.id : a.title.en}
-							</h2>
-						</header>
-						<p className="text-sm text-muted-foreground mb-3">
-							{language === "id" ? a.location.id : a.location.en}
-						</p>
-						<p className="text-sm mb-4">
-							{language === "id"
-								? a.description.id
-								: a.description.en}
-						</p>
-						{a.link && (
-							<Button asChild>
-								<a
-									href={a.link}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{t("agenda.register")}
-									<ArrowRight className="ml-2 w-4 h-4" />
-								</a>
-							</Button>
-						)}
-					</article>
-				))}
-			</section>
+			{sortedAgenda.length === 0 ? (
+				<div className="bg-muted/50 border rounded-lg p-8 text-center">
+					<p className="text-muted-foreground text-lg">
+						{language === "id"
+							? "Tidak ada agenda yang tersedia saat ini. Silakan cek kembali nanti."
+							: "No agendas available at this time. Please check back later."}
+					</p>
+				</div>
+			) : (
+				<section className="grid gap-6 md:grid-cols-2">
+					{sortedAgenda.map((a, index) => (
+						<article
+							key={a.id}
+							className="rounded-lg border p-6 bg-card shadow-sm hover:shadow-md transition-shadow animate-fade-in"
+							style={{ animationDelay: `${index * 0.1}s` }}
+						>
+							<header className="mb-2">
+								<time className="text-sm text-muted-foreground">
+									{new Date(a.date).toLocaleString(
+										language === "id" ? "id-ID" : "en-US",
+										{
+											dateStyle: "full",
+											timeStyle: "short",
+										}
+									)}
+								</time>
+								<h2 className="text-xl font-semibold">
+									{language === "id" ? a.title.id : a.title.en}
+								</h2>
+							</header>
+							<p className="text-sm text-muted-foreground mb-3">
+								{language === "id" ? a.location.id : a.location.en}
+							</p>
+							<p className="text-sm mb-4">
+								{language === "id"
+									? a.description.id
+									: a.description.en}
+							</p>
+							{a.link && (
+								<Button asChild>
+									<a
+										href={a.link}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{t("agenda.register")}
+										<ArrowRight className="ml-2 w-4 h-4" />
+									</a>
+								</Button>
+							)}
+						</article>
+					))}
+				</section>
+			)}
 		</main>
 	);
 };

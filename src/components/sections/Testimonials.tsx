@@ -1,4 +1,4 @@
-import { Quote, Star } from "lucide-react";
+import { Star, User, UserRound } from "lucide-react";
 import { testimonials } from "@/data/testimonials";
 import { useLanguage } from "@/contexts";
 
@@ -17,7 +17,7 @@ const Testimonials = () => {
 					{testimonials.map((testimonial) => (
 						<article
 							key={testimonial.name}
-							className="rounded-lg border p-6 bg-card shadow-sm"
+							className="rounded-lg border p-6 bg-card shadow-sm hover:shadow-md transition-shadow"
 						>
 							<div className="flex items-center gap-2 text-primary">
 								{[...Array(5)].map((_, i) => (
@@ -29,19 +29,35 @@ const Testimonials = () => {
 								))}
 							</div>
 							<p className="text-sm text-muted-foreground mt-3">
-								“
+								"
 								{language === "id"
 									? testimonial.quote.id
 									: testimonial.quote.en}
-								”
+								"
 							</p>
-							<div className="mt-4 text-sm font-medium">
-								{testimonial.name}
-							</div>
-							<div className="text-xs text-muted-foreground">
-								{language === "id"
-									? testimonial.role.id
-									: testimonial.role.en}
+							<div className="mt-4 flex items-center gap-3">
+								<div
+									className={`w-12 h-12 rounded-full flex items-center justify-center ${testimonial.gender === "male"
+											? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+											: "bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400"
+										}`}
+								>
+									{testimonial.gender === "male" ? (
+										<User size={24} strokeWidth={2} />
+									) : (
+										<UserRound size={24} strokeWidth={2} />
+									)}
+								</div>
+								<div>
+									<div className="text-sm font-medium">
+										{testimonial.name}
+									</div>
+									<div className="text-xs text-muted-foreground">
+										{language === "id"
+											? testimonial.role.id
+											: testimonial.role.en}
+									</div>
+								</div>
 							</div>
 						</article>
 					))}

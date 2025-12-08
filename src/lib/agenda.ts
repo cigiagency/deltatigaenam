@@ -7,8 +7,9 @@ export async function getAgendaItems(): Promise<AgendaItem[]> {
 		);
 
 		if (!response.ok) {
+			// Return user-friendly error instead of technical details
 			throw new Error(
-				`Failed to fetch agenda items: ${response.status} ${response.statusText}`
+				"Unable to load agenda data"
 			);
 		}
 
@@ -19,7 +20,7 @@ export async function getAgendaItems(): Promise<AgendaItem[]> {
 			throw error;
 		}
 		throw new Error(
-			"An unknown error occurred while fetching agenda items"
+			"Unable to load agenda data"
 		);
 	}
 }

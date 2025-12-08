@@ -41,7 +41,7 @@ export const useAgenda = () => {
 				setError(
 					err instanceof Error
 						? err.message
-						: "Failed to fetch agenda"
+						: "Unable to load agenda data"
 				);
 			} finally {
 				setLoading(false);

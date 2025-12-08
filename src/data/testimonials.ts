@@ -1,5 +1,6 @@
 type Testimonial = {
 	name: string;
+	gender: "male" | "female";
 	role: { id: string; en: string };
 	quote: { id: string; en: string };
 };
@@ -7,6 +8,7 @@ type Testimonial = {
 export const testimonials: Testimonial[] = [
 	{
 		name: "Budi Santoso",
+		gender: "male",
 		role: {
 			id: "HR Manager, Industri Manufaktur",
 			en: "HR Manager, Manufacturing Industry",
@@ -18,6 +20,7 @@ export const testimonials: Testimonial[] = [
 	},
 	{
 		name: "Siti Rahma",
+		gender: "female",
 		role: {
 			id: "Quality Lead, Layanan Kesehatan",
 			en: "Quality Lead, Healthcare Services",
@@ -29,6 +32,7 @@ export const testimonials: Testimonial[] = [
 	},
 	{
 		name: "Andi Pratama",
+		gender: "male",
 		role: {
 			id: "Supervisor Operasional, Energi",
 			en: "Operational Supervisor, Energy",
@@ -39,3 +43,4 @@ export const testimonials: Testimonial[] = [
 		},
 	},
 ];
+
