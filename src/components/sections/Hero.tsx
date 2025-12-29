@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Mail } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "@/contexts";
@@ -138,6 +139,21 @@ const Hero = () => {
 															{slide.cta.label}
 														</a>
 													</Button>
+													<Button
+														size="lg"
+														variant="outline"
+														className="w-full sm:w-auto bg-white/50 backdrop-blur-sm border-slate-200 hover:bg-white hover:text-primary font-semibold px-6 md:px-8 py-4 md:py-6 text-base md:text-lg rounded-xl shadow-xl transform hover:scale-105 transition-all duration-300 gap-2 overflow-hidden"
+														asChild
+													>
+														<a href="mailto:info@deltatigaenam.com">
+															<Mail className="w-5 h-5 flex-shrink-0" />
+															<span className="truncate">
+																{language === "id"
+																	? "Kirim email ke info@deltatigaenam.com"
+																	: "Send email to info@deltatigaenam.com"}
+															</span>
+														</a>
+													</Button>
 												</div>
 											</div>
 										</div>
@@ -168,15 +184,14 @@ const Hero = () => {
 																		strokeWidth={
 																			2
 																		}
-																		d={`${
-																			index ===
+																		d={`${index ===
 																			0
-																				? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-																				: index ===
-																				  1
+																			? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+																			: index ===
+																				1
 																				? "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L4.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
 																				: "M3 7h18M3 12h18M3 17h18"
-																		}`}
+																			}`}
 																	/>
 																</svg>
 															</div>
@@ -205,15 +220,14 @@ const Hero = () => {
 																		strokeWidth={
 																			2
 																		}
-																		d={`${
-																			index ===
+																		d={`${index ===
 																			0
-																				? "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-																				: index ===
-																				  1
+																			? "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+																			: index ===
+																				1
 																				? "M12 4v16m8-8H4"
 																				: "M3 10h11M9 21V3m12 8h-8"
-																		}`}
+																			}`}
 																	/>
 																</svg>
 															</div>
@@ -242,15 +256,14 @@ const Hero = () => {
 																		strokeWidth={
 																			2
 																		}
-																		d={`${
-																			index ===
+																		d={`${index ===
 																			0
-																				? "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-																				: index ===
-																				  1
+																			? "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+																			: index ===
+																				1
 																				? "M12 8c-1.657 0-3 1.343-3 3v5h6v-5c0-1.657-1.343-3-3-3zm0-5a3 3 0 013 3v1H9V6a3 3 0 013-3z"
 																				: "M12 2l3 7h7l-5.5 4 2 7-6.5-4-6.5 4 2-7L2 9h7z"
-																		}`}
+																			}`}
 																	/>
 																</svg>
 															</div>
@@ -282,11 +295,10 @@ const Hero = () => {
 				{slides.map((_, index) => (
 					<button
 						key={index}
-						className={`relative transition-all duration-300 rounded-full ${
-							index === selectedIndex
-								? "w-10 md:w-12 h-5 md:h-4 bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg"
-								: "w-5 md:w-4 h-5 md:h-4 bg-white/50 hover:bg-white/70 hover:scale-110"
-						}`}
+						className={`relative transition-all duration-300 rounded-full ${index === selectedIndex
+							? "w-10 md:w-12 h-5 md:h-4 bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg"
+							: "w-5 md:w-4 h-5 md:h-4 bg-white/50 hover:bg-white/70 hover:scale-110"
+							}`}
 						onClick={() => scrollTo(index)}
 						aria-label={`Go to slide ${index + 1}`}
 					>

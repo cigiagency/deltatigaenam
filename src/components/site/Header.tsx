@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { Menu, Languages, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts";
 
@@ -8,9 +8,31 @@ const Header = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const { language, setLanguage } = useLanguage();
 
-	const toggleLanguage = () => {
-		setLanguage(language === "id" ? "en" : "id");
-	};
+	// Flag components
+	const FlagID = () => (
+		<svg
+			className="w-5 h-auto rounded-[2px] shadow-sm border border-black/5"
+			viewBox="0 0 3 2"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect width="3" height="1" fill="#ed1c24" />
+			<rect width="3" height="1" y="1" fill="#fff" />
+		</svg>
+	);
+
+	const FlagEN = () => (
+		<svg
+			className="w-5 h-auto rounded-[2px] shadow-sm border border-black/5"
+			viewBox="0 0 60 30"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path d="M0,0 v30 h60 v-30 z" fill="#012169" />
+			<path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6" />
+			<path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" />
+			<path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10" />
+			<path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6" />
+		</svg>
+	);
 
 	// Detect scroll for shadow effect
 	useEffect(() => {
@@ -35,9 +57,8 @@ const Header = () => {
 
 	return (
 		<header
-			className={`border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70 sticky top-10 z-40 transition-all duration-300 ${
-				scrolled ? "shadow-lg" : "shadow-sm"
-			}`}
+			className={`border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70 sticky top-10 z-40 transition-all duration-300 ${scrolled ? "shadow-lg" : "shadow-sm"
+				}`}
 		>
 			<div className="container">
 				<div className="flex h-16 lg:h-18 items-center justify-between">
@@ -61,10 +82,9 @@ const Header = () => {
 						<NavLink
 							to="/"
 							className={({ isActive }) =>
-								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -80,10 +100,9 @@ const Header = () => {
 						<NavLink
 							to="/layanan"
 							className={({ isActive }) =>
-								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -99,10 +118,9 @@ const Header = () => {
 						<NavLink
 							to="/agenda"
 							className={({ isActive }) =>
-								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -118,10 +136,9 @@ const Header = () => {
 						<NavLink
 							to="/blog"
 							className={({ isActive }) =>
-								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`relative px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -136,40 +153,54 @@ const Header = () => {
 						</NavLink>
 
 						{/* Language Switcher */}
-						<div className="ml-2 pl-2 border-l">
+						<div className="ml-2 pl-2 border-l flex items-center gap-1.5">
 							<button
-								onClick={toggleLanguage}
-								className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-all duration-200"
-								title={
-									language === "id"
-										? "Switch to English"
-										: "Ganti ke Bahasa Indonesia"
-								}
+								onClick={() => setLanguage("id")}
+								className={`flex items-center gap-1 px-1.5 py-1 rounded-md transition-all duration-200 ${language === "id"
+										? "bg-primary/10 ring-1 ring-primary/20"
+										: "opacity-40 hover:opacity-100 grayscale hover:grayscale-0"
+									}`}
+								title="Bahasa Indonesia"
 							>
-								<Languages className="w-4 h-4" />
-								<span className="font-semibold">
-									{language === "id" ? "EN" : "ID"}
-								</span>
+								<FlagID />
+								<span className="text-[10px] font-bold">ID</span>
+							</button>
+							<button
+								onClick={() => setLanguage("en")}
+								className={`flex items-center gap-1 px-1.5 py-1 rounded-md transition-all duration-200 ${language === "en"
+										? "bg-primary/10 ring-1 ring-primary/20"
+										: "opacity-40 hover:opacity-100 grayscale hover:grayscale-0"
+									}`}
+								title="English"
+							>
+								<FlagEN />
+								<span className="text-[10px] font-bold">EN</span>
 							</button>
 						</div>
 					</nav>
 
 					{/* Mobile Controls */}
 					<div className="flex items-center gap-2 md:hidden">
-						<button
-							onClick={toggleLanguage}
-							className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-all duration-200"
-							title={
-								language === "id"
-									? "Switch to English"
-									: "Ganti ke Bahasa Indonesia"
-							}
-						>
-							<Languages className="w-4 h-4" />
-							<span className="text-xs font-semibold">
-								{language === "id" ? "EN" : "ID"}
-							</span>
-						</button>
+						<div className="flex items-center gap-1 bg-accent/30 p-1 rounded-lg">
+							<button
+								onClick={() => setLanguage("id")}
+								className={`p-1.5 rounded-md transition-all ${language === "id"
+										? "bg-background shadow-sm scale-110"
+										: "opacity-40 grayscale"
+									}`}
+							>
+								<FlagID />
+							</button>
+							<button
+								onClick={() => setLanguage("en")}
+								className={`p-1.5 rounded-md transition-all ${language === "en"
+										? "bg-background shadow-sm scale-110"
+										: "opacity-40 grayscale"
+									}`}
+							>
+								<FlagEN />
+							</button>
+						</div>
 						<button
 							className="p-2 hover:bg-accent rounded-md transition-colors"
 							aria-label="Toggle menu"
@@ -193,10 +224,9 @@ const Header = () => {
 							to="/"
 							onClick={() => setOpen(false)}
 							className={({ isActive }) =>
-								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -206,10 +236,9 @@ const Header = () => {
 							to="/layanan"
 							onClick={() => setOpen(false)}
 							className={({ isActive }) =>
-								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -219,10 +248,9 @@ const Header = () => {
 							to="/agenda"
 							onClick={() => setOpen(false)}
 							className={({ isActive }) =>
-								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>
@@ -232,10 +260,9 @@ const Header = () => {
 							to="/blog"
 							onClick={() => setOpen(false)}
 							className={({ isActive }) =>
-								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-									isActive
-										? "text-foreground bg-accent"
-										: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+								`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
+									? "text-foreground bg-accent"
+									: "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								}`
 							}
 						>

@@ -45,7 +45,7 @@ const CSChat = () => {
 				<div className="mt-6 grid gap-3">
 					<Button className="justify-start gap-2" asChild>
 						<a
-							href="https://wa.me/62818834766?text=Halo+PT.+Delta+Tiga+Enam"
+							href="https://api.whatsapp.com/send/?phone=62818834766&text=Halo+PT.+Delta+Tiga+Enam&type=phone_number&app_absent=0"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
@@ -54,7 +54,6 @@ const CSChat = () => {
 						</a>
 					</Button>
 					<Button
-						variant="ghost"
 						className="justify-start gap-2"
 						asChild
 					>

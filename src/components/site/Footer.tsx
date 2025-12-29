@@ -1,3 +1,4 @@
+import { Mail } from "lucide-react";
 import { useLanguage } from "@/contexts";
 
 const Footer = () => {
@@ -61,7 +62,7 @@ const Footer = () => {
 						<li>{t("footer.headOffice.address2")}</li>
 						<li>{t("footer.headOffice.address3")}</li>
 						<li className="text-foreground">
-							PH. 021-5890 5002, 0818 834 766
+							PH. <a href="tel:02158905002" className="hover:text-primary transition-colors">021-5890 5002</a>, <a href="https://api.whatsapp.com/send/?phone=62818834766&text=Halo+PT.+Delta+Tiga+Enam&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">0818 834 766</a>
 						</li>
 					</ul>
 				</div>
@@ -73,7 +74,9 @@ const Footer = () => {
 						<li>{t("footer.marketingOffice.address1")}</li>
 						<li>{t("footer.marketingOffice.address2")}</li>
 						<li>{t("footer.marketingOffice.address3")}</li>
-						<li className="text-foreground">PH. 021-8988 1110</li>
+						<li className="text-foreground">
+							PH. <a href="tel:02189881110" className="hover:text-primary transition-colors">021-8988 1110</a>
+						</li>
 					</ul>
 				</div>
 				<div>
@@ -83,7 +86,9 @@ const Footer = () => {
 					<ul className="space-y-2 text-sm text-muted-foreground">
 						<li>{t("footer.operationalOffice.address1")}</li>
 						<li>{t("footer.operationalOffice.address2")}</li>
-						<li className="text-foreground">PH. 0817 018 6104</li>
+						<li className="text-foreground">
+							PH. <a href="https://wa.me/628170186104" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">0817 018 6104</a>
+						</li>
 					</ul>
 				</div>
 			</div>

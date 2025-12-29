@@ -178,9 +178,9 @@ const translations = {
 		"cschat.button": "Hubungi Kami",
 		"cschat.title": "Terhubung dengan Kami",
 		"cschat.description":
-			"Kami online di jam kerja (Senin–Jumat, 09.00–17.00 WIB).",
+			"Kami online di jam kerja (Senin–Jumat, 09.00–17.00 WIB). Anda juga dapat menghubungi kami melalui info@deltatigaenam.com",
 		"cschat.whatsapp": "Chat via WhatsApp",
-		"cschat.email": "Kirim Email",
+		"cschat.email": "Kirim email ke info@deltatigaenam.com",
 
 		// Delivery
 		"delivery.title": "Alur Layanan",
@@ -353,9 +353,9 @@ const translations = {
 		"cschat.button": "Contact Us",
 		"cschat.title": "Connect with Us",
 		"cschat.description":
-			"We're online during business hours (Monday–Friday, 09:00–17:00 WIB).",
+			"We're online during business hours (Monday–Friday, 09:00–17:00 WIB). You can also reach us at info@deltatigaenam.com",
 		"cschat.whatsapp": "Chat via WhatsApp",
-		"cschat.email": "Send Email",
+		"cschat.email": "Send email to info@deltatigaenam.com",
 
 		// Delivery
 		"delivery.title": "Service Workflow",
@@ -392,7 +392,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 	const t = (key: string): string => {
 		return (
 			translations[language][
-				key as keyof (typeof translations)[typeof language]
+			key as keyof (typeof translations)[typeof language]
 			] || key
 		);
 	};

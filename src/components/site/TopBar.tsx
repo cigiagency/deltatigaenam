@@ -18,12 +18,14 @@ const TopBar = () => {
 						</a>
 						<span className="hidden md:block text-border">|</span>
 						<a
-							href="tel:+6281316690036"
+							href="https://api.whatsapp.com/send/?phone=62818834766&text=Halo+PT.+Delta+Tiga+Enam&type=phone_number&app_absent=0"
+							target="_blank"
+							rel="noopener noreferrer"
 							className="hidden md:flex items-center gap-1.5 hover:text-foreground transition-colors"
 						>
 							<Phone className="w-3.5 h-3.5" />
 							<span className="hidden lg:inline">
-								+62 813-1669-0036
+								+62 818-834-766
 							</span>
 						</a>
 						<a
@@ -47,7 +49,7 @@ const TopBar = () => {
 							<Instagram className="w-4 h-4" />
 						</a>
 						<a
-							href="https://wa.me/6281316690036"
+							href="https://api.whatsapp.com/send/?phone=62818834766&text=Halo+PT.+Delta+Tiga+Enam&type=phone_number&app_absent=0"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="flex items-center gap-1.5 px-2 py-1 hover:text-foreground text-muted-foreground transition-colors rounded-md hover:bg-accent md:hidden"
