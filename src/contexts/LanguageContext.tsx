@@ -178,7 +178,7 @@ const translations = {
 		"cschat.button": "Hubungi Kami",
 		"cschat.title": "Terhubung dengan Kami",
 		"cschat.description":
-			"Kami online di jam kerja (Senin–Jumat, 09.00–17.00 WIB). Anda juga dapat menghubungi kami melalui info@deltatigaenam.com",
+			"Kami online di jam kerja (Senin–Jumat, 09.00–17.00 WIB). Anda juga dapat menghubungi kami melalui",
 		"cschat.whatsapp": "Chat via WhatsApp",
 		"cschat.email": "Kirim email ke info@deltatigaenam.com",
 
@@ -353,7 +353,7 @@ const translations = {
 		"cschat.button": "Contact Us",
 		"cschat.title": "Connect with Us",
 		"cschat.description":
-			"We're online during business hours (Monday–Friday, 09:00–17:00 WIB). You can also reach us at info@deltatigaenam.com",
+			"We're online during business hours (Monday–Friday, 09:00–17:00 WIB). You can also reach us at",
 		"cschat.whatsapp": "Chat via WhatsApp",
 		"cschat.email": "Send email to info@deltatigaenam.com",
 

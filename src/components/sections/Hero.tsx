@@ -17,21 +17,18 @@ const Hero = () => {
 			title: t("hero.title1"),
 			subtitle: t("hero.subtitle1"),
 			description: t("hero.description1"),
-			cta: { label: t("hero.cta1"), href: "/layanan" },
 		},
 		{
 			id: 2,
 			title: t("hero.title2"),
 			subtitle: t("hero.subtitle2"),
 			description: t("hero.description2"),
-			cta: { label: t("hero.cta2"), href: "/agenda" },
 		},
 		{
 			id: 3,
 			title: t("hero.title3"),
 			subtitle: t("hero.subtitle3"),
 			description: t("hero.description3"),
-			cta: { label: t("hero.cta3"), href: "/blog" },
 		},
 	];
 
@@ -125,36 +122,7 @@ const Hero = () => {
 													{slide.description}
 												</p>
 
-												<div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-													<Button
-														size="lg"
-														className={`w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 md:px-8 py-4 md:py-6 text-base md:text-lg rounded-xl shadow-2xl hover:shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 border-0`}
-														asChild
-													>
-														<a
-															href={
-																slide.cta.href
-															}
-														>
-															{slide.cta.label}
-														</a>
-													</Button>
-													<Button
-														size="lg"
-														variant="outline"
-														className="w-full sm:w-auto bg-white/50 backdrop-blur-sm border-slate-200 hover:bg-white hover:text-primary font-semibold px-6 md:px-8 py-4 md:py-6 text-base md:text-lg rounded-xl shadow-xl transform hover:scale-105 transition-all duration-300 gap-2 overflow-hidden"
-														asChild
-													>
-														<a href="mailto:info@deltatigaenam.com">
-															<Mail className="w-5 h-5 flex-shrink-0" />
-															<span className="truncate">
-																{language === "id"
-																	? "Kirim email ke info@deltatigaenam.com"
-																	: "Send email to info@deltatigaenam.com"}
-															</span>
-														</a>
-													</Button>
-												</div>
+
 											</div>
 										</div>
 
